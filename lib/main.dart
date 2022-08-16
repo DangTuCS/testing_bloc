@@ -1,7 +1,7 @@
+
 import 'package:flutter/material.dart';
-import 'package:bloc/bloc.dart';
-import 'home_page.dart';
-import 'dart:math' as math show Random;
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:testing_bloc/home_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -18,25 +18,10 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const MyHomePage(),
+      home: BlocProvider(
+        create: (_) => PersonsBloc(),
+        child: const HomePage(),
+      ),
     );
   }
-}
-
-const names = [
-  'Foo',
-  'Bar',
-  'Barz',
-];
-
-extension RandomElement<T> on Iterable<T> {
-  T getRandomElement() {
-    return elementAt(math.Random().nextInt(length));
-  }
-}
-
-class NamesCubit extends Cubit<String?> {
-  NamesCubit() : super(null);
-
-  void pickRandomName() => emit(names.getRandomElement());
 }
